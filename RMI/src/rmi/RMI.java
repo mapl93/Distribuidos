@@ -15,6 +15,7 @@ import java.rmi.RemoteException;
  */
 public interface RMI extends Remote{
     public String getData(String data) throws RemoteException;
-    public String[] getId() throws RemoteException;
+    public String getId() throws RemoteException;   
     public String[] getSucursals() throws RemoteException;
+    public Cliente getClienteNuevo() throws RemoteException;
 }

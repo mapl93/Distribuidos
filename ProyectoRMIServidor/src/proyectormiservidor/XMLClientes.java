@@ -29,7 +29,7 @@ public class XMLClientes {
         List <Element> rootChildrens;
         int pos = 0;
         int i = 0;
-        String[] clientesEncontrados = new String[20] ;
+        String[] clientesEncontrados = new String[500] ;
 
         SAXBuilder builder = new SAXBuilder();
 
@@ -44,11 +44,15 @@ public class XMLClientes {
             {
                 child = rootChildrens.get(pos);           
                 
-                if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null && child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO) != null)
+                if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
                 {
                     clientesEncontrados[i] = child.getAttributeValue(Util.TAG_ID_CLIENTE);
-                    //clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO);
-                    i = i+1;
+                    clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
+                    clientesEncontrados[i+2] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA);
+                    clientesEncontrados[i+3] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA);
+                    clientesEncontrados[i+4] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA);
+                    clientesEncontrados[i+5] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA);
+                    i = i+6;
                 }
                 pos++;
             }
@@ -83,17 +87,22 @@ public class XMLClientes {
         Element root, newChild;
 
         SAXBuilder  builder = new SAXBuilder();
-
+        System.out.println("1");
         try
         {
             doc = builder.build(Util.DIR_XML_CLIENTES);
             root = doc.getRootElement();
 
             newChild = new Element(Util.TAG_CLIENTE);
-
+            System.out.println("10");
             newChild.setAttribute(Util.TAG_ID_CLIENTE, cliente[0]);
-            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO, cliente[1]);
-
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, cliente[1]);
+            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, cliente[2]);
+            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, cliente[3]);
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, cliente[4]);
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, cliente[5]);
+            
+            System.out.println("100");
             root.addContent(newChild);
 
             try
@@ -218,11 +227,15 @@ public class XMLClientes {
             {
                 child = rootChildrens.get(pos);           
                 
-                if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null && child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO) != null)
+                if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
                 {
                     clientesEncontrados[i] = child.getAttributeValue(Util.TAG_ID_CLIENTE);
-                    clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO);
-                    i = i+2;
+                    clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
+                    clientesEncontrados[i+2] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA);
+                    clientesEncontrados[i+3] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA);
+                    clientesEncontrados[i+4] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA);
+                    clientesEncontrados[i+5] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA);
+                    i = i+6;
                 }
                 pos++;
             }
@@ -285,10 +298,13 @@ public class XMLClientes {
                 newChild = new Element(Util.TAG_CLIENTE);
 
                 newChild.setAttribute(Util.TAG_ID_CLIENTE, listaClientes[i]);
-                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO, listaClientes[i++]);
-
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, listaClientes[i++]);
+                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, listaClientes[i+2]);
+                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, listaClientes[i+3]);
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, listaClientes[i+4]);
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, listaClientes[i+5]);
                 root.addContent(newChild);
-                i+=2;
+                i+=6;
             }
 
             try
@@ -371,10 +387,6 @@ public class XMLClientes {
                     System.out.println("while");
                     while (i<length)
                     {
-                        System.out.println("length: "  + length);
-                        System.out.println("i: "  + i);
-                        System.out.println("c: " + c);
-                        System.out.println("id encontrado: " + clientesEncontrados[i]);
                         if (clientesEncontrados[i].equals(Integer.toString(c))){
                             existe = true;
                             break;
@@ -382,7 +394,6 @@ public class XMLClientes {
                             System.out.println(existe);
                         i++;
                     }
-                    System.out.println("consiguio? " + existe);
                     if (!existe)
                     {
                         idNuevo = c;
