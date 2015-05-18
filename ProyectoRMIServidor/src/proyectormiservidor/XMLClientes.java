@@ -2,7 +2,9 @@ package proyectormiservidor;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -10,6 +12,7 @@ import org.jdom2.input.JDOMParseException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+import rmi.Cliente;
 /** 
  * Clase para el manejo del XML de los clientes
  * @author Santiago Bernal
@@ -23,13 +26,12 @@ public class XMLClientes {
      * @throws excepciones de lectura de archivos
      * 
      */
-    public static String[] leerClientesDeXML(){
+    public static List<Cliente> leerClientesDeXML(){
         Document doc;
         Element root, child;
         List <Element> rootChildrens;
         int pos = 0;
-        int i = 0;
-        String[] clientesEncontrados = new String[24] ;
+        List<Cliente> clientesEncontrados = new ArrayList<>() ;
 
         SAXBuilder builder = new SAXBuilder();
 
@@ -46,13 +48,14 @@ public class XMLClientes {
                 
                 if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
                 {
-                    clientesEncontrados[i] = child.getAttributeValue(Util.TAG_ID_CLIENTE);
-                    clientesEncontrados[i+1] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
-                    clientesEncontrados[i+2] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA);
-                    clientesEncontrados[i+3] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA);
-                    clientesEncontrados[i+4] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA);
-                    clientesEncontrados[i+5] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA);
-                    i = i+6;
+                    Cliente clienteEncontrado = new Cliente();
+                    clienteEncontrado.setId(child.getAttributeValue(Util.TAG_ID_CLIENTE));
+                    clienteEncontrado.setPuerto(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE));
+                    clienteEncontrado.setIdVecinoDerecha(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA));
+                    clienteEncontrado.setIdVecinoIzquierda(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA)); 
+                    clienteEncontrado.setPuertoVecinoDerecha(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA)); 
+                    clienteEncontrado.setPuertoVecinoIzquierda(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA)); 
+                    clientesEncontrados.add(clienteEncontrado);
                 }
                 pos++;
             }
@@ -75,7 +78,6 @@ public class XMLClientes {
         
         return clientesEncontrados;
     }
-    
     /**
      * Metodo para guardar los clientes en el xml
      * @return booleano true si se pudo completar
@@ -83,27 +85,24 @@ public class XMLClientes {
      * @throws excepciones de lectura de archivos
      * 
      */
-    public static boolean guardarClienteEnXML(String[] cliente){
+    public static boolean guardarClienteEnXML(Cliente cliente){
         Document doc;
         Element root, newChild;
 
         SAXBuilder  builder = new SAXBuilder();
-        System.out.println("1");
         try
         {
             doc = builder.build(Util.DIR_XML_CLIENTES);
             root = doc.getRootElement();
 
             newChild = new Element(Util.TAG_CLIENTE);
-            System.out.println("10");
-            newChild.setAttribute(Util.TAG_ID_CLIENTE, cliente[0]);
-            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, cliente[1]);
-            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, cliente[2]);
-            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, cliente[3]);
-            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, cliente[4]);
-            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, cliente[5]);
+            newChild.setAttribute(Util.TAG_ID_CLIENTE, cliente.getId());
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, cliente.getPuerto());
+            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, cliente.getIdVecinoDerecha());
+            newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, cliente.getIdVecinoIzquierda());
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, cliente.getPuertoVecinoDerecha());
+            newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, cliente.getPuertoVecinoIzquierda());
             
-            System.out.println("100");
             root.addContent(newChild);
 
             try
@@ -210,10 +209,10 @@ public class XMLClientes {
         Element root, child;
         List <Element> rootChildrens;
         int pos = 0;
-        int i = 0;
         int c = 0;
-        String[] clientesEncontrados = new String[500] ;
-        String [] clientesAGuardar = new String[500];
+        int i =0;
+        List<Cliente> clientesEncontrados = new ArrayList<>() ;
+        List<Cliente> clientesAGuardar = new ArrayList<>();
 
         SAXBuilder builder = new SAXBuilder();
 
@@ -230,29 +229,26 @@ public class XMLClientes {
                 
                 if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
                 {
-                    clientesEncontrados[i] = child.getAttributeValue(Util.TAG_ID_CLIENTE);
-                    clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
-                    clientesEncontrados[i+2] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA);
-                    clientesEncontrados[i+3] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA);
-                    clientesEncontrados[i+4] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA);
-                    clientesEncontrados[i+5] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA);
-                    i = i+6;
+                    Cliente clienteEncontrado = new Cliente();
+                    clienteEncontrado.setId(child.getAttributeValue(Util.TAG_ID_CLIENTE));
+                    clienteEncontrado.setPuerto(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE));
+                    clienteEncontrado.setIdVecinoDerecha(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA));
+                    clienteEncontrado.setIdVecinoIzquierda(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA)); 
+                    clienteEncontrado.setPuertoVecinoDerecha(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA)); 
+                    clienteEncontrado.setPuertoVecinoIzquierda(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA)); 
+                    clientesEncontrados.add(clienteEncontrado);
                 }
                 pos++;
             }
-            
-            i = 0;
-            while (i<clientesEncontrados.length)
+            for (Cliente cliente : clientesEncontrados)
             {
-                if (!clientesEncontrados[i].equals(clienteId)){
-                    clientesAGuardar[c] = clientesEncontrados[i];
-                    clientesAGuardar[c++] = clientesEncontrados[i++];
-                    c+=2;
+                if (cliente.getId().equals(clienteId))
+                {
+                    clientesEncontrados.remove(cliente);
                 }
-
-                i+=2;
             }
-            guardarClienteEnXML(clientesAGuardar);
+            borrarTodosLosClientes();
+            guardarListaDeClientesEnXML(clientesEncontrados);
         }
         catch(JDOMParseException e)
         {
@@ -280,7 +276,7 @@ public class XMLClientes {
      * @throws excepciones de lectura de archivos
      * 
      */
-     public static boolean guardarListaDeClientesEnXML(String[] listaClientes){
+     public static boolean guardarListaDeClientesEnXML(List<Cliente> listaClientes){
         Document doc;
         Element root, newChild;
         int pos = 0;
@@ -292,20 +288,17 @@ public class XMLClientes {
         {
             doc = builder.build(Util.DIR_XML_CLIENTES);
             root = doc.getRootElement();
-            
-            while (i<listaClientes.length)
+            for (Cliente cliente : listaClientes)
             {
-
                 newChild = new Element(Util.TAG_CLIENTE);
 
-                newChild.setAttribute(Util.TAG_ID_CLIENTE, listaClientes[i]);
-                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, listaClientes[i++]);
-                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, listaClientes[i+2]);
-                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, listaClientes[i+3]);
-                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, listaClientes[i+4]);
-                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, listaClientes[i+5]);
+                newChild.setAttribute(Util.TAG_ID_CLIENTE, cliente.getId());
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE, cliente.getPuerto());
+                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_DERECHA, cliente.getIdVecinoDerecha());
+                newChild.setAttribute(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA, cliente.getIdVecinoIzquierda());
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_DERECHA, cliente.getPuertoVecinoDerecha());
+                newChild.setAttribute(Util.TAG_PUERTO_CLIENTE_IZQUIERDA, cliente.getPuertoVecinoIzquierda());
                 root.addContent(newChild);
-                i+=6;
             }
 
             try
@@ -385,14 +378,12 @@ public class XMLClientes {
                 while (c<=length)
                 {
                     i = 0;
-                    System.out.println("while");
                     while (i<length)
                     {
                         if (clientesEncontrados[i].equals(Integer.toString(c))){
                             existe = true;
                             break;
                         }
-                            System.out.println(existe);
                         i++;
                     }
                     if (!existe)
@@ -422,5 +413,150 @@ public class XMLClientes {
         }
         
         return Integer.toString(idNuevo);
+     }
+     
+     /**
+      * Acomoda los vecinos cuando hay un cliente nuevo y selecciona su vecino
+      *@param vecino cliente vecino nuevo
+      *@param vecinoIzquieda cliente vecino nuevo a la izquierda
+      *@param cliente Cliente cliente a colocar los vecinos
+      * 
+      */
+     public static void acomodarVecinos (Cliente vecino, Cliente vecinoIzquierda, 
+             Cliente cliente , List<Cliente> listaClientes)
+     {
+         listaClientes.remove(vecino);
+         listaClientes.remove(vecinoIzquierda);
+         listaClientes.remove(cliente);
+         cliente.setIdVecinoDerecha(vecino.getId());
+         cliente.setPuertoVecinoDerecha(vecino.getPuerto());
+         cliente.setIdVecinoIzquierda(vecino.getIdVecinoIzquierda());
+         cliente.setPuertoVecinoIzquierda(vecino.getPuertoVecinoIzquierda());
+         vecino.setIdVecinoIzquierda(cliente.getId());
+         vecino.setPuertoVecinoIzquierda(cliente.getPuerto());
+         if (!vecino.equals(vecinoIzquierda))
+         {
+            vecinoIzquierda.setIdVecinoDerecha(cliente.getId());
+            vecinoIzquierda.setPuertoVecinoDerecha(cliente.getPuerto());    
+            listaClientes.add(vecinoIzquierda);
+         }
+         else
+         {
+             vecino.setIdVecinoDerecha(cliente.getId());
+             vecino.setPuertoVecinoDerecha(cliente.getPuerto());
+             cliente.setIdVecinoIzquierda(vecino.getId());
+             cliente.setPuertoVecinoIzquierda(vecino.getPuerto());
+         }
+         
+         listaClientes.add(vecino);
+         listaClientes.add(cliente);
+         borrarTodosLosClientes();
+         guardarListaDeClientesEnXML(listaClientes);
+         
+     }
+     
+
+     
+     /**
+      * Metodo para asignarle los vecinos a un cliente nuevo
+      * @param idVecino id del vecino solicitado
+      * @param idCliente que solicito el cambio
+      * @return String array con los datos de los vecinos con el formato:
+      * { id vecino derecha, puerto vecino derecha, id vecino izquierda
+      *   puerto vecino izquierda}
+      */
+     public static String[] buscarVecino(String idVecino, String idCliente)
+     {
+         Document doc;
+        Element root, child;
+        List <Element> rootChildrens;
+        int pos = 0;
+        int c = 0;
+        int i =0;
+        List<Cliente> clientesEncontrados = new ArrayList<>() ;
+        String[] vecinos = new String[6];
+        
+
+        SAXBuilder builder = new SAXBuilder();
+
+        try
+        {
+            Cliente vecino = new Cliente();
+            Cliente cliente = new Cliente();
+            Cliente vecinoIzquierda = new Cliente();
+            doc = builder.build(Util.DIR_XML_CLIENTES);
+
+            root = doc.getRootElement();
+            rootChildrens = root.getChildren();
+
+            while (pos < rootChildrens.size())
+            {
+                child = rootChildrens.get(pos);           
+                
+                if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
+                {
+                    Cliente clienteEncontrado = new Cliente();
+                    clienteEncontrado.setId(child.getAttributeValue(Util.TAG_ID_CLIENTE));
+                    clienteEncontrado.setPuerto(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE));
+                    clienteEncontrado.setIdVecinoDerecha(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA));
+                    clienteEncontrado.setIdVecinoIzquierda(child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA)); 
+                    clienteEncontrado.setPuertoVecinoDerecha(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA)); 
+                    clienteEncontrado.setPuertoVecinoIzquierda(child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_IZQUIERDA)); 
+                    clientesEncontrados.add(clienteEncontrado);
+                }
+                pos++;
+            }
+
+            for (Cliente clienteActual : clientesEncontrados)
+            {
+                if (clienteActual.getId().equals(idVecino))
+                {
+                    vecino = clienteActual;
+                }
+                if (clienteActual.getId().equals(idCliente))
+                {
+                    cliente = clienteActual;
+                }               
+            }
+            
+            if (vecino.getIdVecinoIzquierda().equals("N/A"))
+            {
+                vecinoIzquierda = vecino;
+            }
+            else
+            {
+                for (Cliente clienteActual : clientesEncontrados)
+                {
+                    if (clienteActual.getId().equals(vecino.getIdVecinoIzquierda()))
+                    {
+                        vecinoIzquierda = clienteActual;
+                    }
+                }
+            }
+            
+                vecinos[0] = vecino.getId();
+                vecinos[1] = vecino.getPuerto();
+                vecinos[2] = vecinoIzquierda.getId();
+                vecinos[3] = vecinoIzquierda.getPuerto();
+                
+            acomodarVecinos(vecino, vecinoIzquierda, cliente, clientesEncontrados);
+        }
+        catch(JDOMParseException e)
+        {
+            System.out.println(Util.ERROR_XML_VACIO);
+            e.printStackTrace();
+        }
+        catch(JDOMException e)
+        {
+            System.out.println(Util.ERROR_XML_CARGANDO);
+            e.printStackTrace();
+        }
+        catch(IOException e)
+        {
+            System.out.println(Util.ERROR_XML_CARGANDO);
+            e.printStackTrace();
+        }
+        
+        return vecinos;
      }
 }

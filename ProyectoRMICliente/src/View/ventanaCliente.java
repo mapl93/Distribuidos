@@ -18,7 +18,7 @@ public class ventanaCliente extends javax.swing.JFrame {
      */
     public ventanaCliente() {
         initComponents();
-        ventanaClienteController.initComponentes(JTAMensaje, JButtonEnviar, JButtonSalir, CBSucursales, JLID, JLPuerto);
+        ventanaClienteController.initComponentes(JLabelID, JLabelPuerto, JTAMensaje, JButtonEnviar, JButtonSalir, CBSucursales, JBSeleccionaVecino);
     }
 
     /**
@@ -39,22 +39,13 @@ public class ventanaCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JLabelID = new javax.swing.JLabel();
         JLabelPuerto = new javax.swing.JLabel();
-        JLPuerto = new javax.swing.JLabel();
-        JLID = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        JBSeleccionaVecino = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         JButtonSalir.setText("Salir");
 
         JButtonEnviar.setText("Enviar");
-        JButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JButtonEnviarActionPerformed(evt);
-            }
-        });
 
         CBSucursales.setName(""); // NOI18N
 
@@ -70,17 +61,12 @@ public class ventanaCliente extends javax.swing.JFrame {
 
         JLabelPuerto.setText("Mi Puerto:");
 
-        JLPuerto.setText("Puerto");
-
-        JLID.setText("ID");
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
-
-        setJMenuBar(jMenuBar1);
+        JBSeleccionaVecino.setText("Seleccionar");
+        JBSeleccionaVecino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBSeleccionaVecinoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -91,7 +77,10 @@ public class ventanaCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(CBSucursales, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(CBSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(JBSeleccionaVecino))
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -106,12 +95,8 @@ public class ventanaCliente extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(JLabelID)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JLID)
-                                .addGap(33, 33, 33)
-                                .addComponent(JLabelPuerto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JLPuerto)))
+                                .addGap(73, 73, 73)
+                                .addComponent(JLabelPuerto)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -120,13 +105,13 @@ public class ventanaCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLabelID)
-                    .addComponent(JLabelPuerto)
-                    .addComponent(JLPuerto)
-                    .addComponent(JLID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                    .addComponent(JLabelPuerto))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(CBSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CBSucursales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBSeleccionaVecino))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -141,13 +126,9 @@ public class ventanaCliente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonEnviarActionPerformed
-        String[] mensaje = new String[3];
-        mensaje[0] = JLID.getText();
-        mensaje[1] = CBSucursales.getSelectedItem().toString();
-        mensaje[2] = JTAMensaje.getText();
-        ventanaClienteController.saveMessage(mensaje);
-    }//GEN-LAST:event_JButtonEnviarActionPerformed
+    private void JBSeleccionaVecinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBSeleccionaVecinoActionPerformed
+           ventanaClienteController.clickSeleccionarVecino();
+    }//GEN-LAST:event_JBSeleccionaVecinoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,18 +167,14 @@ public class ventanaCliente extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox CBSucursales;
+    private javax.swing.JButton JBSeleccionaVecino;
     private javax.swing.JButton JButtonEnviar;
     private javax.swing.JButton JButtonSalir;
-    private javax.swing.JLabel JLID;
-    private javax.swing.JLabel JLPuerto;
     private javax.swing.JLabel JLabelID;
     private javax.swing.JLabel JLabelPuerto;
     private javax.swing.JTextArea JTAMensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

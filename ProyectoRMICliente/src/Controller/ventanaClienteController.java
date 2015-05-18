@@ -4,27 +4,26 @@
  */
 package Controller;
 
-import rmi.Paquete;
 import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import rmi.Cliente;
-import rmi.RMI;
+import rmi.Paquete;
 import rmicliente.ConexionRMI;
 import rmicliente.RMICliente;
 import rmicliente.RMIClienteListener;
 
 /**
- *
+ *Clase para controlar la ventana de cliente
  * @author Santiago Bernal
+ * @author Manuel Pacheco
  */
 public class ventanaClienteController {
     
@@ -34,12 +33,19 @@ public class ventanaClienteController {
     private static JButton JButtonEnviar;
     private static JButton JButtonSalir;
     private static JComboBox CBSurcursales;
-    private static JLabel JLID;
-    private static JLabel JLPuerto;
-    private static Cliente cliente;
+    private static  JButton JButtonSeleccionarVecino;  
     private static Paquete[] paquete = new Paquete[2];
-    
-    public static void initComponentes (JTextArea JTAMensaje, JButton JButtonEnviar,JButton JButtonSalir, JComboBox CBSucursales, JLabel JLID, JLabel JLPuerto)
+    private static Cliente cliente;
+    /**
+     * Metodo inicializador de componentes
+     * @param JLabelID
+     * @param JLabelPuerto
+     * @param JTAMensaje
+     * @param JButtonEnviar
+     * @param JButtonSalir
+     * @param CBSucursales 
+     */
+    public static void initComponentes (JLabel JLabelID, JLabel JLabelPuerto, JTextArea JTAMensaje, JButton JButtonEnviar,JButton JButtonSalir, JComboBox CBSucursales, JButton JButtonSeleccionarVecino)
     {
         ventanaClienteController.JLabelID = JLabelID;
         ventanaClienteController.JLabelPuerto = JLabelPuerto;
@@ -47,19 +53,17 @@ public class ventanaClienteController {
         ventanaClienteController.JButtonEnviar = JButtonEnviar;
         ventanaClienteController.JButtonSalir = JButtonSalir;
         ventanaClienteController.CBSurcursales = CBSucursales;
-        ventanaClienteController.JLID = JLID;
-        ventanaClienteController.JLPuerto = JLPuerto;
+        ventanaClienteController.JButtonSeleccionarVecino = JButtonSeleccionarVecino;
         
         try {
-            settearPaquetes();
+            
         
             ventanaClienteController.cliente = new Cliente();
-            ConexionRMI con = new ConexionRMI();
-            ventanaClienteController.cliente = con.getMyId();
-            ventanaClienteController.JLID.setText(ventanaClienteController.cliente.getId());
-            ventanaClienteController.JLPuerto.setText(ventanaClienteController.cliente.getPuerto());
-            RMIClienteListener RMICL = new RMIClienteListener(Integer.parseInt(ventanaClienteController.cliente.getPuerto()));
+            ventanaClienteController.cliente = ConexionRMI.getMyId();
+            ventanaClienteController.JLabelID.setText("Mi ID: " + ventanaClienteController.cliente.getId());
+            ventanaClienteController.JLabelPuerto.setText("Mi puerto: " + ventanaClienteController.cliente.getPuerto());
             llenarComboSurcursales();
+            RMIClienteListener RMICL = new RMIClienteListener(Integer.parseInt(ventanaClienteController.cliente.getPuerto()));
         }
         catch(Exception e)
         {
@@ -67,8 +71,52 @@ public class ventanaClienteController {
         }
         
     }
+    /**
+     * Metodo para llenar el combobox del cliente
+     *@throws Remote Exception
+     */
+    public static void llenarComboSurcursales()
+    {
+            List<Cliente> sucursales;
+            sucursales = ConexionRMI.buscarInfoCB();
+            String idSucursal = ventanaClienteController.cliente.getId();
+            for (Cliente clienteEncontrado : sucursales)
+            {
+                if (!clienteEncontrado.getId().equals(idSucursal))
+                {
+                    ventanaClienteController.CBSurcursales.addItem(clienteEncontrado.getId());
+                   
+                }
+            }
+    }
+
+    /**
+     * Metodo para escoger el vecino al que se le mandara los mensajes
+     * y colocar el cliente en el anillo
+     * 
+     */
+    public static void clickSeleccionarVecino() {
+        CBSurcursales.setEnabled(false);
+        ventanaClienteController.JButtonSeleccionarVecino.setEnabled(false);        
+        /*
+         * El string que me regresa el servidor tendra el siguiente formato:
+         * { id vecino derecha, puerto vecino derecha, id vecino izquierda
+         *   puerto vecino izquierda}
+         */
+        String[] vecinos = ConexionRMI.solicitarVecino(CBSurcursales.getSelectedItem().toString(), cliente.getId());
+        cliente.setIdVecinoDerecha(vecinos[0]);
+        cliente.setIdVecinoIzquierda(vecinos[2]);
+        cliente.setPuertoVecinoDerecha(vecinos[1]);
+        cliente.setPuertoVecinoIzquierda(vecinos[3]);
+        System.out.println("Mi vecino a la derecha: " + 
+                cliente.getIdVecinoDerecha() +
+                " puerto: " + cliente.getPuertoVecinoDerecha());
+        System.out.println("Mi vecino a la izquierda: " + 
+                cliente.getIdVecinoIzquierda() + " puerto: "
+                + cliente.getPuertoVecinoIzquierda());
+    }
     
-    public static void settearPaquetes(){
+     public static void settearPaquetes(){
         paquete[0].setOrigen(null);
         paquete[0].setDestino(null);
         paquete[0].setMensaje(null);
@@ -86,34 +134,7 @@ public class ventanaClienteController {
         paquete[1].setTiempo(0);
     }
     
-    
-    public static void llenarComboSurcursales()
-    {
-        try{
-            Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
-            RMI rmi  = (RMI) reg.lookup("server");
-            String[] sucursales = rmi.getSucursals();
-            String idSucursal = ventanaClienteController.cliente.getId();
-            int i=0;
-            int j=0;
-            while (i <= sucursales.length) {
-                if (idSucursal.equals(sucursales[i])){
-                    i++;
-                    j = j + 6;
-                }
-                else{
-                    ventanaClienteController.CBSurcursales.addItem(sucursales[j]);
-                    i++;
-                    j = j + 6;
-                }
-            }
-        }
-        catch (Exception e){
-            System.out.println();
-        }
-    }
-    
-    public static void saveMessage(String[] mensaje){
+        public static void saveMessage(String[] mensaje){
         //DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date fechaCreacion = new Date();
         boolean saved  = false;
