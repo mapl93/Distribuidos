@@ -29,7 +29,7 @@ public class XMLClientes {
         List <Element> rootChildrens;
         int pos = 0;
         int i = 0;
-        String[] clientesEncontrados = new String[500] ;
+        String[] clientesEncontrados = new String[24] ;
 
         SAXBuilder builder = new SAXBuilder();
 
@@ -47,7 +47,7 @@ public class XMLClientes {
                 if (child.getAttributeValue(Util.TAG_ID_CLIENTE) != null )
                 {
                     clientesEncontrados[i] = child.getAttributeValue(Util.TAG_ID_CLIENTE);
-                    clientesEncontrados[i++] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
+                    clientesEncontrados[i+1] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE);
                     clientesEncontrados[i+2] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_DERECHA);
                     clientesEncontrados[i+3] = child.getAttributeValue(Util.TAG_ID_CLIENTE_VECINO_IZQUIERDA);
                     clientesEncontrados[i+4] = child.getAttributeValue(Util.TAG_PUERTO_CLIENTE_DERECHA);
@@ -75,6 +75,7 @@ public class XMLClientes {
         
         return clientesEncontrados;
     }
+    
     /**
      * Metodo para guardar los clientes en el xml
      * @return booleano true si se pudo completar

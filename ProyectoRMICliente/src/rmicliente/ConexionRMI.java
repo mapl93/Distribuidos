@@ -40,7 +40,7 @@ public class ConexionRMI {
     public rmi.Cliente getMyId()
     {            
         try {
-             Cliente cliente = new Cliente();
+            Cliente cliente = new Cliente();
             Registry reg = LocateRegistry.getRegistry("127.0.0.1", 1099);
             RMI rmi  = (RMI) reg.lookup("server");
             cliente = rmi.getClienteNuevo();

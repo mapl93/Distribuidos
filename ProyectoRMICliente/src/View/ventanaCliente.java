@@ -18,7 +18,7 @@ public class ventanaCliente extends javax.swing.JFrame {
      */
     public ventanaCliente() {
         initComponents();
-        ventanaClienteController.initComponentes(JLabelID, JLabelPuerto, JTAMensaje, JButtonEnviar, JButtonSalir, CBSucursales);
+        ventanaClienteController.initComponentes(JTAMensaje, JButtonEnviar, JButtonSalir, CBSucursales, JLID, JLPuerto);
     }
 
     /**
@@ -39,6 +39,8 @@ public class ventanaCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JLabelID = new javax.swing.JLabel();
         JLabelPuerto = new javax.swing.JLabel();
+        JLPuerto = new javax.swing.JLabel();
+        JLID = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -48,6 +50,11 @@ public class ventanaCliente extends javax.swing.JFrame {
         JButtonSalir.setText("Salir");
 
         JButtonEnviar.setText("Enviar");
+        JButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JButtonEnviarActionPerformed(evt);
+            }
+        });
 
         CBSucursales.setName(""); // NOI18N
 
@@ -62,6 +69,10 @@ public class ventanaCliente extends javax.swing.JFrame {
         JLabelID.setText("Mi ID:");
 
         JLabelPuerto.setText("Mi Puerto:");
+
+        JLPuerto.setText("Puerto");
+
+        JLID.setText("ID");
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -95,8 +106,12 @@ public class ventanaCliente extends javax.swing.JFrame {
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(JLabelID)
-                                .addGap(73, 73, 73)
-                                .addComponent(JLabelPuerto)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JLID)
+                                .addGap(33, 33, 33)
+                                .addComponent(JLabelPuerto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JLPuerto)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -105,7 +120,9 @@ public class ventanaCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JLabelID)
-                    .addComponent(JLabelPuerto))
+                    .addComponent(JLabelPuerto)
+                    .addComponent(JLPuerto)
+                    .addComponent(JLID))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
@@ -123,6 +140,14 @@ public class ventanaCliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void JButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JButtonEnviarActionPerformed
+        String[] mensaje = new String[3];
+        mensaje[0] = JLID.getText();
+        mensaje[1] = CBSucursales.getSelectedItem().toString();
+        mensaje[2] = JTAMensaje.getText();
+        ventanaClienteController.saveMessage(mensaje);
+    }//GEN-LAST:event_JButtonEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +188,8 @@ public class ventanaCliente extends javax.swing.JFrame {
     private javax.swing.JComboBox CBSucursales;
     private javax.swing.JButton JButtonEnviar;
     private javax.swing.JButton JButtonSalir;
+    private javax.swing.JLabel JLID;
+    private javax.swing.JLabel JLPuerto;
     private javax.swing.JLabel JLabelID;
     private javax.swing.JLabel JLabelPuerto;
     private javax.swing.JTextArea JTAMensaje;
