@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscaTitulo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="titulo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscaTituloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscaTituloResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BuscaAutor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="autor" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscaAutorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscaAutorResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscaISBN">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="isbn" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BuscaISBNResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="BuscaISBNResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReplicaData">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReplicaDataResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscaTituloSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscaTitulo" />
+  </wsdl:message>
+  <wsdl:message name="BuscaTituloSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscaTituloResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscaAutorSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscaAutor" />
+  </wsdl:message>
+  <wsdl:message name="BuscaAutorSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscaAutorResponse" />
+  </wsdl:message>
+  <wsdl:message name="BuscaISBNSoapIn">
+    <wsdl:part name="parameters" element="tns:BuscaISBN" />
+  </wsdl:message>
+  <wsdl:message name="BuscaISBNSoapOut">
+    <wsdl:part name="parameters" element="tns:BuscaISBNResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReplicaDataSoapIn">
+    <wsdl:part name="parameters" element="tns:ReplicaData" />
+  </wsdl:message>
+  <wsdl:message name="ReplicaDataSoapOut">
+    <wsdl:part name="parameters" element="tns:ReplicaDataResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WSBibliotecaZSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaTitulo">
+      <wsdl:input message="tns:BuscaTituloSoapIn" />
+      <wsdl:output message="tns:BuscaTituloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaAutor">
+      <wsdl:input message="tns:BuscaAutorSoapIn" />
+      <wsdl:output message="tns:BuscaAutorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BuscaISBN">
+      <wsdl:input message="tns:BuscaISBNSoapIn" />
+      <wsdl:output message="tns:BuscaISBNSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReplicaData">
+      <wsdl:input message="tns:ReplicaDataSoapIn" />
+      <wsdl:output message="tns:ReplicaDataSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSBibliotecaZSoap" type="tns:WSBibliotecaZSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaTitulo">
+      <soap:operation soapAction="http://tempuri.org/BuscaTitulo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaAutor">
+      <soap:operation soapAction="http://tempuri.org/BuscaAutor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaISBN">
+      <soap:operation soapAction="http://tempuri.org/BuscaISBN" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReplicaData">
+      <soap:operation soapAction="http://tempuri.org/ReplicaData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WSBibliotecaZSoap12" type="tns:WSBibliotecaZSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://tempuri.org/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaTitulo">
+      <soap12:operation soapAction="http://tempuri.org/BuscaTitulo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaAutor">
+      <soap12:operation soapAction="http://tempuri.org/BuscaAutor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BuscaISBN">
+      <soap12:operation soapAction="http://tempuri.org/BuscaISBN" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReplicaData">
+      <soap12:operation soapAction="http://tempuri.org/ReplicaData" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WSBibliotecaZ">
+    <wsdl:port name="WSBibliotecaZSoap" binding="tns:WSBibliotecaZSoap">
+      <soap:address location="http://localhost:62535/WSBibliotecaZ.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WSBibliotecaZSoap12" binding="tns:WSBibliotecaZSoap12">
+      <soap12:address location="http://localhost:62535/WSBibliotecaZ.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

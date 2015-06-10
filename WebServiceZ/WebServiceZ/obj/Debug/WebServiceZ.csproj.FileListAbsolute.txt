@@ -1,0 +1,6 @@
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\bin\WebServiceZ.dll.config
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\bin\WebServiceZ.dll
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\bin\WebServiceZ.pdb
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\obj\Debug\WebServiceZ.csprojResolveAssemblyReference.cache
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\obj\Debug\WebServiceZ.dll
+c:\users\mapl\documents\visual studio 2013\Projects\WebServiceZ\WebServiceZ\obj\Debug\WebServiceZ.pdb

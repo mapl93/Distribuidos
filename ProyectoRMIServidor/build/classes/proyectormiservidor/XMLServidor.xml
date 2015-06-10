@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<root>
-  <cliente id="1" puerto="56001" vecino-der="0" vecino-izq="2" puerto-der="56000" puerto-izq="56002" />
-  <cliente id="0" puerto="56000" vecino-der="3" vecino-izq="1" puerto-der="56003" puerto-izq="56001" />
-  <cliente id="2" puerto="56002" vecino-der="1" vecino-izq="3" puerto-der="56001" puerto-izq="56003" />
-  <cliente id="3" puerto="56003" vecino-der="2" vecino-izq="0" puerto-der="56002" puerto-izq="56000" />
-</root>

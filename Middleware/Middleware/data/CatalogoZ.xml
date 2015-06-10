@@ -1,0 +1,24 @@
+<?xml version='1.0'?>
+    <libro>
+        <isbn>1</isbn>
+        <titulo>Harry Potter y La Piedra Filosofal</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>2</isbn>
+        <titulo>Harry Potter y La Camara de Los Secretos</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>3</isbn>
+        <titulo>Harry Potter y El Prisionero de Askaban</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>4</isbn>
+        <titulo>Harry Potter y El Caliz de Oro</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>5</isbn>
+        <titulo>Harry Potter y La Orden del Fenix</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>6</isbn>
+        <titulo>Harry Potter y El Principe Mestizo</titulo>
+        <autor>J. K. Rowling</autor>
+        <isbn>7</isbn>
+        <titulo>Harry Potter y Las Reliquias de La Muerte</titulo>
+        <autor>J. K. Rowling</autor>
+    </libro>

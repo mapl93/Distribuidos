@@ -1,0 +1,6 @@
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\bin\Middleware.dll.config
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\bin\Middleware.dll
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\bin\Middleware.pdb
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\obj\Debug\Middleware.csprojResolveAssemblyReference.cache
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\obj\Debug\Middleware.dll
+c:\users\mapl\documents\visual studio 2013\Projects\Middleware\Middleware\obj\Debug\Middleware.pdb

@@ -1,0 +1,8 @@
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\bin\BibliotecaZ.dll.config
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\bin\BibliotecaZ.dll
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\bin\BibliotecaZ.pdb
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\bin\WebServiceZ.dll
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\bin\WebServiceZ.pdb
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\obj\Debug\BibliotecaZ.csprojResolveAssemblyReference.cache
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\obj\Debug\BibliotecaZ.dll
+C:\Users\MAPL\Documents\Visual Studio 2013\Projects\WebServiceZ\BibliotecaZ\obj\Debug\BibliotecaZ.pdb

@@ -1,2 +1,0 @@
-# Distribuidos
-Proyecto Java RMI
